@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.elsonji.tipcalculator.MainActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/bill_amount_text_view"
@@ -90,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/imageButton"
+        android:id="@+id/button_15"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -108,7 +112,7 @@
         android:layout_marginLeft="8dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_18"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -119,12 +123,12 @@
         app:layout_constraintBottom_toTopOf="@+id/editText2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toEndOf="@+id/button_15"
         app:layout_constraintTop_toBottomOf="@+id/bill_amount_edit_text"
         app:layout_constraintVertical_bias="0.638" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button_20"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -136,13 +140,13 @@
         app:layout_constraintBottom_toTopOf="@+id/editText2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/button_18"
         app:layout_constraintTop_toBottomOf="@+id/bill_amount_edit_text"
         app:layout_constraintVertical_bias="0.638"
         android:layout_marginRight="8dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_minus"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -156,10 +160,11 @@
         app:layout_constraintHorizontal_bias="0.692"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/editText2"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.75"
+        android:layout_marginLeft="8dp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button_plus"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -171,8 +176,11 @@
         app:layout_constraintBottom_toTopOf="@+id/editText3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintStart_toEndOf="@+id/button_minus"
         app:layout_constraintTop_toBottomOf="@+id/editText2"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.75"
+        android:layout_marginRight="8dp" />
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
