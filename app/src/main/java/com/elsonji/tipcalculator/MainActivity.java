@@ -1,8 +1,7 @@
 package com.elsonji.tipcalculator;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,8 +24,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 double billTotal  = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                Log.i("aaaaaaa", String.valueOf(billTotal));
                 tipTextView.setText(String.valueOf(billTotal * 15 / 100));
+            }
+        });
+
+        Button button18Percent = findViewById(R.id.button_18);
+        button18Percent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double billTotal  = Double.parseDouble(billTotalEditText.getText().toString().trim());
+                tipTextView.setText(String.valueOf(billTotal * 18 / 100));
             }
         });
     }
