@@ -36,5 +36,14 @@ public class MainActivity extends AppCompatActivity {
                 tipTextView.setText(String.valueOf(billTotal * 18 / 100));
             }
         });
+
+        Button button20Percent = findViewById(R.id.button_20);
+        button20Percent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double billTotal  = Double.parseDouble(billTotalEditText.getText().toString().trim());
+                tipTextView.setText(String.valueOf(billTotal * 20 / 100));
+            }
+        });
     }
 }
