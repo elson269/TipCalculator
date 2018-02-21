@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 double billTotal  = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                tipTextView.setText(String.valueOf(billTotal * 30 / 100));
+                tipTextView.setText(String.valueOf(billTotal *20 / 100));
             }
         });
     }
