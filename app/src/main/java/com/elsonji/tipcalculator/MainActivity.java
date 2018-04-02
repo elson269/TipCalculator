@@ -23,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
         button15Percent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double billTotal  = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                tipTextView.setText(String.valueOf(billTotal * 15 / 100));
+                if (billTotalEditText.getText().length() > 0) {
+                    double billTotal = Double.parseDouble(billTotalEditText.getText().toString().trim());
+                    tipTextView.setText(String.valueOf(billTotal * 15 / 100));
+                }
             }
         });
 
@@ -32,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
         button18Percent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double billTotal  = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                tipTextView.setText(String.valueOf(billTotal * 18 / 100));
+                if (billTotalEditText.getText().length() > 0) {
+                    double billTotal = Double.parseDouble(billTotalEditText.getText().toString().trim());
+                    tipTextView.setText(String.valueOf(billTotal * 18 / 100));
+                }
             }
         });
 
@@ -41,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
         button20Percent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double billTotal  = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                tipTextView.setText(String.valueOf(billTotal * 20 / 100));
+                if (billTotalEditText.getText().length() > 0) {
+                    double billTotal = Double.parseDouble(billTotalEditText.getText().toString().trim());
+                    tipTextView.setText(String.valueOf(billTotal * 20 / 100));
+                }
             }
         });
     }
