@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    int personCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,8 +17,9 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText billTotalEditText = findViewById(R.id.bill_amount_edit_text);
 
-
         final TextView tipTextView = findViewById(R.id.tipTextView);
+
+        final TextView personCountTextView = findViewById(R.id.personCountTextView);
 
         Button button15Percent = findViewById(R.id.button_15);
         button15Percent.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +50,26 @@ public class MainActivity extends AppCompatActivity {
                 if (billTotalEditText.getText().length() > 0) {
                     double billTotal = Double.parseDouble(billTotalEditText.getText().toString().trim());
                     tipTextView.setText(String.valueOf(billTotal * 20 / 100));
+                }
+            }
+        });
+
+        Button addPersonButton = findViewById(R.id.button_plus);
+        addPersonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                personCountTextView.setText(String.valueOf(++personCount));
+
+            }
+        });
+
+
+        Button minusPersonButton = findViewById(R.id.button_minus);
+        minusPersonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (personCount > 0) {
+                    personCountTextView.setText(String.valueOf(--personCount));
                 }
             }
         });
