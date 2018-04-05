@@ -21,13 +21,16 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView personCountTextView = findViewById(R.id.personCountTextView);
 
+        final TextView billTotalTextView = findViewById(R.id.billTotalTextView);
+
         Button button15Percent = findViewById(R.id.button_15);
         button15Percent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (billTotalEditText.getText().length() > 0) {
-                    double billTotal = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                    tipTextView.setText(String.valueOf(billTotal * 15 / 100));
+                    double totalBeforeTip = Double.parseDouble(billTotalEditText.getText().toString().trim());
+                    tipTextView.setText(String.valueOf(totalBeforeTip * 15 / 100));
+                    billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 15 / 100));
                 }
             }
         });
@@ -37,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (billTotalEditText.getText().length() > 0) {
-                    double billTotal = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                    tipTextView.setText(String.valueOf(billTotal * 18 / 100));
+                    double totalBeforeTip = Double.parseDouble(billTotalEditText.getText().toString().trim());
+                    tipTextView.setText(String.valueOf(totalBeforeTip * 18 / 100));
+                    billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 18 / 100));
+
                 }
             }
         });
@@ -48,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (billTotalEditText.getText().length() > 0) {
-                    double billTotal = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                    tipTextView.setText(String.valueOf(billTotal * 20 / 100));
+                    double totalBeforeTip = Double.parseDouble(billTotalEditText.getText().toString().trim());
+                    tipTextView.setText(String.valueOf(totalBeforeTip * 20 / 100));
+                    billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 20 / 100));
+
                 }
             }
         });
