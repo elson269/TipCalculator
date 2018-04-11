@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (billTotalEditText.getText().length() > 0) {
                     double totalBeforeTip = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                    tipTextView.setText(String.valueOf(totalBeforeTip * 30 / 100));
+                    tipTextView.setText(String.valueOf(totalBeforeTip * 20 / 100));
                     billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 20 / 100));
 
                 }
