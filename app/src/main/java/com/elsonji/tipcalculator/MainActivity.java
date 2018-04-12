@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         button15Percent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (billTotalEditText.getText().length() > 0) {
+                String amountString = billTotalEditText.getText().toString().trim();
+                if (amountString.length() > 0) {
                     double totalBeforeTip = Double.parseDouble(billTotalEditText.getText().toString().trim());
                     tipTextView.setText(String.valueOf(totalBeforeTip * 15 / 100));
                     billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 15 / 100));
