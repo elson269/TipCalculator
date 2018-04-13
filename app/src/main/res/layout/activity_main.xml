@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.elsonji.tipcalculator.MainActivity">
 
     <android.support.constraint.ConstraintLayout
@@ -81,15 +81,18 @@
             android:id="@+id/billTotalTextView"
             android:layout_width="wrap_content"
             android:layout_height="19dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:ems="10"
             android:text="@string/_0"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.052"
+            app:layout_constraintHorizontal_bias="0.039"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.777" />
 
         <Button
             android:id="@+id/button_15"
@@ -188,13 +191,29 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:text="@string/_0"
+            android:text="@string/person_1"
             app:layout_constraintBottom_toTopOf="@+id/billTotalTextView"
             app:layout_constraintEnd_toStartOf="@+id/button_minus"
             app:layout_constraintHorizontal_bias="0.976"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/totalPerPerson"
+            android:layout_width="66dp"
+            android:layout_height="19dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/_0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.545"
+            app:layout_constraintStart_toEndOf="@+id/billTotalTextView"
+            app:layout_constraintTop_toBottomOf="@+id/button_minus" />
 
     </android.support.constraint.ConstraintLayout>
 

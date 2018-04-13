@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    int personCount = 0;
+    int personCount = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView billTotalTextView = findViewById(R.id.billTotalTextView);
 
+        final TextView billTotalPerPersonTextView = findViewById(R.id.totalPerPerson);
+
+        final double[] billTotalAfterTip = new double[1];
+
         Button button15Percent = findViewById(R.id.button_15);
         button15Percent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 if (amountString.length() > 0) {
                     double totalBeforeTip = Double.parseDouble(billTotalEditText.getText().toString().trim());
                     tipTextView.setText(String.valueOf(totalBeforeTip * 15 / 100));
+                    billTotalAfterTip[0] = totalBeforeTip + totalBeforeTip * 15 / 100;
                     billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 15 / 100));
                 }
             }
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 if (billTotalEditText.getText().length() > 0) {
                     double totalBeforeTip = Double.parseDouble(billTotalEditText.getText().toString().trim());
                     tipTextView.setText(String.valueOf(totalBeforeTip * 18 / 100));
+                    billTotalAfterTip[0] = totalBeforeTip + totalBeforeTip * 18 / 100;
                     billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 18 / 100));
 
                 }
@@ -56,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 if (billTotalEditText.getText().length() > 0) {
                     double totalBeforeTip = Double.parseDouble(billTotalEditText.getText().toString().trim());
                     tipTextView.setText(String.valueOf(totalBeforeTip * 20 / 100));
+                    billTotalAfterTip[0] = totalBeforeTip + totalBeforeTip * 20 / 100;
                     billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 20 / 100));
 
                 }
@@ -67,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 personCountTextView.setText(String.valueOf(++personCount));
+                billTotalPerPersonTextView.setText(String.valueOf(billTotalAfterTip[0] / personCount));
 
             }
         });
@@ -76,8 +84,9 @@ public class MainActivity extends AppCompatActivity {
         minusPersonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (personCount > 0) {
+                if (personCount > 1) {
                     personCountTextView.setText(String.valueOf(--personCount));
+                    billTotalPerPersonTextView.setText(String.valueOf(billTotalAfterTip[0] / personCount));
                 }
             }
         });
