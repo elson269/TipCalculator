@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
                     tipTextView.setText(String.valueOf(totalBeforeTip * 15 / 100));
                     billTotalAfterTip[0] = totalBeforeTip + totalBeforeTip * 15 / 100;
                     billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 15 / 100));
+                    billTotalPerPersonTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 15 / 100));
                 }
             }
         });
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     tipTextView.setText(String.valueOf(totalBeforeTip * 18 / 100));
                     billTotalAfterTip[0] = totalBeforeTip + totalBeforeTip * 18 / 100;
                     billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 18 / 100));
-
+                    billTotalPerPersonTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 18 / 100));
                 }
             }
         });
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     tipTextView.setText(String.valueOf(totalBeforeTip * 20 / 100));
                     billTotalAfterTip[0] = totalBeforeTip + totalBeforeTip * 20 / 100;
                     billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 20 / 100));
-
+                    billTotalPerPersonTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 20 / 100));
                 }
             }
         });
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 personCountTextView.setText(String.valueOf(++personCount));
                 billTotalPerPersonTextView.setText(String.valueOf(billTotalAfterTip[0] / personCount));
-
             }
         });
 
