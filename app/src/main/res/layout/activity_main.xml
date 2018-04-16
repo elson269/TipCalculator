@@ -38,7 +38,7 @@
             tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tipPercentageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -62,10 +62,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.052"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/tipPercentageTextView" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/billAfterTaxTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -91,7 +91,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.039"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/billAfterTaxTextView"
             app:layout_constraintVertical_bias="0.777" />
 
         <Button
@@ -108,7 +108,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tipTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.301"
-            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/tipPercentageTextView"
             app:layout_constraintTop_toBottomOf="@+id/bill_amount_edit_text"
             app:layout_constraintVertical_bias="0.638" />
 
@@ -160,7 +160,7 @@
             app:layout_constraintBottom_toTopOf="@+id/billTotalTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.692"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/billAfterTaxTextView"
             app:layout_constraintTop_toBottomOf="@+id/tipTextView"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -196,7 +196,7 @@
             app:layout_constraintEnd_toStartOf="@+id/button_minus"
             app:layout_constraintHorizontal_bias="0.976"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/billAfterTaxTextView"
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
