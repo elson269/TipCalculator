@@ -27,17 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
         final double[] billTotalAfterTip = new double[1];
 
+        final double[] totalBeforeTip = new double[1];
+
         Button button15Percent = findViewById(R.id.button_15);
         button15Percent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String amountString = billTotalEditText.getText().toString().trim();
                 if (amountString.length() > 0) {
-                    double totalBeforeTip = Double.parseDouble(billTotalEditText.getText().toString().trim());
-                    tipTextView.setText(String.valueOf(totalBeforeTip * 15 / 100));
-                    billTotalAfterTip[0] = totalBeforeTip + totalBeforeTip * 15 / 100;
-                    billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 15 / 100));
-                    billTotalPerPersonTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 15 / 100));
+                    totalBeforeTip[0] = Double.parseDouble(billTotalEditText.getText().toString().trim());
+                    tipTextView.setText(String.valueOf(totalBeforeTip[0] * 15 / 100));
+                    billTotalAfterTip[0] = totalBeforeTip[0] + totalBeforeTip[0] * 15 / 100;
+                    billTotalTextView.setText(String.valueOf(totalBeforeTip[0] + totalBeforeTip[0] * 15 / 100));
+                    billTotalPerPersonTextView.setText(String.valueOf(totalBeforeTip[0] + totalBeforeTip[0] * 15 / 100));
                 }
             }
         });
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 personCountTextView.setText(String.valueOf(++personCount));
                 billTotalPerPersonTextView.setText(String.valueOf(billTotalAfterTip[0] / personCount));
+                tipTextView.setText(String.valueOf(totalBeforeTip[0] * 15 / 100 / personCount));
             }
         });
 
