@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     tipTextView.setText(String.valueOf(totalBeforeTip * 20 / 100));
                     billTotalAfterTip[0] = totalBeforeTip + totalBeforeTip * 20 / 100;
                     billTotalTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 20 / 100));
-                    //billTotalPerPersonTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 20 / 100));
+                    billTotalPerPersonTextView.setText(String.valueOf(totalBeforeTip + totalBeforeTip * 20 / 100));
                 }
             }
         });
