@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 personCountTextView.setText(String.valueOf(++personCount));
                 billTotalPerPersonTextView.setText(String.valueOf(billTotalAfterTip[0] / personCount));
-                //tipTextView.setText(String.valueOf(totalBeforeTip[0] * 15 / 100 / personCount));
+                tipTextView.setText(String.valueOf(totalBeforeTip[0] * 15 / 100 / personCount));
             }
         });
 
