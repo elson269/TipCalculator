@@ -1,13 +1,16 @@
 <resources>
     <string name="app_name">Tip Calculator</string>
-    <string name="bill_amount">Bill Amount:          $ </string>
-    <string name="tip_percentage">Tip Percentage:</string>
+    <string name="bill_amount">Bill Amount($): </string>
+    <string name="tip_amount_percent">Tip Amount(%):</string>
+    <string name="tip_amount_total">Tip Total($):</string>
+    <string name="tip_amount_each">Tip Per Person($):</string>
+    <string name="bill_total">Total($):</string>
+    <string name="bill_total_each">Total Per Person($): </string>
     <string name="total">Total:</string>
-    <string name="_15_percent">15%</string>
-    <string name="_18_percent">18%</string>
-    <string name="_20_percent">20%</string>
     <string name="minus_sign">-</string>
     <string name="plus_sign">+</string>
     <string name="_0">0</string>
     <string name="person_1">1</string>
+    <string name="person_s">Person(s):</string>
+    <string name="default_value">0.00</string>
 </resources>
