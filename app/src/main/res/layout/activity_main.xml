@@ -41,6 +41,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="16dp"
                 android:ems="10"
+                android:hint="@string/default_value"
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -71,6 +72,7 @@
                 android:layout_marginStart="16dp"
                 android:ems="10"
                 android:inputType="numberDecimal"
+                android:hint="@string/default_value"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,13 +99,18 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:textSize="20sp"
                 android:background="@drawable/round_button"
                 android:text="@string/minus_sign"
                 android:textColor="#FFFFFF"
+                android:elevation="3dp"
+                android:translationZ="3dp"
+                android:stateListAnimator="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.025"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/personsTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/personsTextView"
+                tools:targetApi="lollipop" />
 
             <Button
                 android:id="@+id/button_plus"
@@ -116,11 +123,16 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/round_button"
                 android:text="@string/plus_sign"
+                android:textSize="20sp"
                 android:textColor="#FFFFFF"
+                android:elevation="3dp"
+                android:translationZ="3dp"
+                android:stateListAnimator="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.206"
                 app:layout_constraintStart_toEndOf="@+id/button_minus"
-                app:layout_constraintTop_toBottomOf="@+id/personsTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/personsTextView"
+                tools:targetApi="lollipop" />
 
 
             <TextView
