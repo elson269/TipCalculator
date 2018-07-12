@@ -1,5 +1,6 @@
 package com.elsonji.tipcalculator;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -48,11 +49,16 @@ public class MainActivity extends AppCompatActivity {
 
     private InputMethodManager mManager;
 
+    private TipViewModel mTipViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mTipViewModel = ViewModelProviders.of(this).get(TipViewModel.class);
+        displayPersonCount();
 
         mManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -60,15 +66,20 @@ public class MainActivity extends AppCompatActivity {
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                personCountTextView.setText(String.valueOf(++personCount));
+                ++personCount;
+                mTipViewModel.setPersonCount(personCount);
+                personCountTextView.setText(String.valueOf(personCount));
             }
         });
 
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (personCount > 1)
-                    personCountTextView.setText(String.valueOf(--personCount));
+                if (personCount > 1) {
+                    --personCount;
+                    mTipViewModel.setPersonCount(personCount);
+                    personCountTextView.setText(String.valueOf(personCount));
+                }
             }
         });
 
@@ -94,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter a number", Toast.LENGTH_LONG).show();
                 }
-                
+
                 tipAmount = billAmount * tipAmountPercent / 100;
                 tipPersonAmount = tipAmount / personCount;
                 totalAmount = billAmount + tipAmount;
@@ -108,5 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    private void displayPersonCount() {
+        personCount = mTipViewModel.getPersonCount();
+        personCountTextView.setText(String.valueOf(personCount) );
     }
 }
