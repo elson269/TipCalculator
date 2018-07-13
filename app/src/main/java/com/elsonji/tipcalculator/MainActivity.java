@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TipViewModel mTipViewModel;
 
+    private boolean mFabClickedStatus = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
 
         mTipViewModel = ViewModelProviders.of(this).get(TipViewModel.class);
         displayPersonCount();
+
+        mFabClickedStatus = mTipViewModel.getFabClickedStatus();
+        if (mFabClickedStatus) {
+            double savedBillAmount = mTipViewModel.getBillAmount();
+            double savedTipPercent = mTipViewModel.getTipAmountPercent();
+            calculateTip(savedBillAmount, savedTipPercent);
+        }
 
         mManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -86,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mTipViewModel.setFabClickedStatus(true);
+
                 String billAmountString = billAmountEditText.getText().toString().trim();
                 String tipAmountString = tipAmountEditText.getText().toString().trim();
 
@@ -106,15 +117,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please enter a number", Toast.LENGTH_LONG).show();
                 }
 
-                tipAmount = billAmount * tipAmountPercent / 100;
-                tipPersonAmount = tipAmount / personCount;
-                totalAmount = billAmount + tipAmount;
-                totalPersonAmount = totalAmount / personCount;
+                mTipViewModel.setBillAmount(billAmount);
+                mTipViewModel.setTipAmountPercent(tipAmountPercent);
 
-                tipAmountTextView.setText(String.valueOf(Math.round(tipAmount * 100d) / 100d));
-                tipPersonAmountTextView.setText(String.valueOf(Math.round(tipPersonAmount * 100d) / 100d));
-                totalAmountTextView.setText(String.valueOf(Math.round(totalAmount * 100d) / 100d));
-                totalPersonAmountTextView.setText(String.valueOf(Math.round(totalPersonAmount * 100d) / 100d));
+                calculateTip(billAmount, tipAmountPercent);
             }
 
         });
@@ -124,5 +130,18 @@ public class MainActivity extends AppCompatActivity {
     private void displayPersonCount() {
         personCount = mTipViewModel.getPersonCount();
         personCountTextView.setText(String.valueOf(personCount) );
+    }
+
+    private void calculateTip(double billAmount, double tipAmountPercent) {
+
+        tipAmount = billAmount * tipAmountPercent / 100;
+        tipPersonAmount = tipAmount / personCount;
+        totalAmount = billAmount + tipAmount;
+        totalPersonAmount = totalAmount / personCount;
+
+        tipAmountTextView.setText(String.valueOf(Math.round(tipAmount * 100d) / 100d));
+        tipPersonAmountTextView.setText(String.valueOf(Math.round(tipPersonAmount * 100d) / 100d));
+        totalAmountTextView.setText(String.valueOf(Math.round(totalAmount * 100d) / 100d));
+        totalPersonAmountTextView.setText(String.valueOf(Math.round(totalPersonAmount * 100d) / 100d));
     }
 }
