@@ -34,7 +34,7 @@
 
             <EditText
                 android:id="@+id/billAmountEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="16dp"
@@ -64,7 +64,7 @@
 
             <EditText
                 android:id="@+id/tipAmountEditText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="16dp"
