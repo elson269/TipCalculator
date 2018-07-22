@@ -2,14 +2,19 @@ package com.elsonji.tipcalculator;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tipAmountEditText)
     EditText tipAmountEditText;
     @BindView(R.id.button_minus)
-    Button minusButton;
+    ImageButton minusButton;
     @BindView(R.id.button_plus)
-    Button plusButton;
+    ImageButton plusButton;
     @BindView(R.id.personCountTextView)
     TextView personCountTextView;
     @BindView(R.id.fab)
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private double totalPersonAmount;
     private double tipAmount;
     private double tipPersonAmount;
+    private float defaultTip;
 
     private InputMethodManager mManager;
 
@@ -53,12 +59,21 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean mFabClickedStatus = false;
 
+    private SharedPreferences mDefaultTipPref;
+    private SharedPreferences.Editor mDefaultTipEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mDefaultTipPref = getSharedPreferences(getString(R.string.preference_default_tip_key), MODE_PRIVATE);
+        defaultTip = mDefaultTipPref.getFloat(getString(R.string.default_tip_key), 0);
+        if (defaultTip != 0) {
+            tipAmountEditText.setText(String.valueOf(defaultTip));
+        }
+        
         mTipViewModel = ViewModelProviders.of(this).get(TipViewModel.class);
         displayPersonCount();
 
@@ -143,5 +158,21 @@ public class MainActivity extends AppCompatActivity {
         tipPersonAmountTextView.setText(String.valueOf(Math.round(tipPersonAmount * 100d) / 100d));
         totalAmountTextView.setText(String.valueOf(Math.round(totalAmount * 100d) / 100d));
         totalPersonAmountTextView.setText(String.valueOf(Math.round(totalPersonAmount * 100d) / 100d));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemClicked = item.getItemId();
+        if (itemClicked == R.id.action_default_tip) {
+            Intent defaultTipActivityIntent = new Intent(this, DefaultTipActivity.class);
+            startActivity(defaultTipActivityIntent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
