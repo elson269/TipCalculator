@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         if (defaultTip != 0) {
             tipAmountEditText.setText(String.valueOf(defaultTip));
         }
-        
+
         mTipViewModel = ViewModelProviders.of(this).get(TipViewModel.class);
         displayPersonCount();
 
