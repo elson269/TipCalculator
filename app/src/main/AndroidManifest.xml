@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DefaultTipActivity"
+            android:label="@string/default_tip"
+            android:parentActivityName=".MainActivity">
+        </activity>
+        <activity android:name=".SettingsActivity" />
     </application>
 
 </manifest>

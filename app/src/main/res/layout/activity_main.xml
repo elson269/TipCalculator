@@ -58,7 +58,6 @@
                                 style="@style/PrimaryEditText"
                                 android:ems="10"
                                 android:hint="@string/bill_amount"
-                                android:inputType="numberDecimal"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +80,6 @@
                                 style="@style/PrimaryEditText"
                                 android:ems="10"
                                 android:hint="@string/tip_amount_percent"
-                                android:inputType="numberDecimal"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.0"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -298,6 +296,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawer_view" />
+        app:menu="@menu/drawer_view"
+        app:headerLayout="@layout/nav_header"/>
 
 </android.support.v4.widget.DrawerLayout>

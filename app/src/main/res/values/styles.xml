@@ -1,11 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
     <style name="PrimaryHeadline">
@@ -18,14 +19,15 @@
 
     </style>
 
-    <style name="PrimaryEditText">
+    <style name="PrimaryEditText" parent="@style/TextAppearance.AppCompat.Small">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:layout_marginStart">16dp</item>
+        <item name="android:inputType">numberDecimal</item>
     </style>
 
-    <style name="ImageButtonStyle">
+    <style name="ImageButtonStyle" parent="@style/Widget.AppCompat.Button">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_marginBottom">8dp</item>
@@ -40,7 +42,7 @@
         <item name="android:translationZ" tools:targetApi="lollipop">3dp</item>
     </style>
 
-    <style name="TextViewStyle">
+    <style name="TextViewStyle" parent="TextAppearance.AppCompat.Small">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
