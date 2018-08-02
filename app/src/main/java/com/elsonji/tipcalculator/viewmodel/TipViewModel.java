@@ -1,4 +1,4 @@
-package com.elsonji.tipcalculator;
+package com.elsonji.tipcalculator.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 

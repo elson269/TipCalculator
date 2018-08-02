@@ -18,11 +18,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
+
+import com.elsonji.tipcalculator.ui.SettingsActivity;
+import com.elsonji.tipcalculator.viewmodel.TipViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,11 +67,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private double tipAmount;
     private double tipPersonAmount;
     private boolean roundTip;
+    private int totalEachAfterRounding;
+    private double tipEachAfterRounding;
+    private double roundedTipAmount, roundedTipPersonAmount, roundedTotalAmount, roundedTotalPersonAmount;
+
 
     private InputMethodManager mManager;
-
     private TipViewModel mTipViewModel;
-
     private boolean mFabClickedStatus = false;
 
 
@@ -94,8 +98,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         item.setChecked(true);
                         mDrawerLayout.closeDrawers();
-                        Intent settingsActivityIntent = new Intent(getApplication(), SettingsActivity.class);
-                        startActivity(settingsActivityIntent);
+                        switch (item.getItemId()) {
+
+                            case R.id.nav_settings:
+                                Intent settingsActivityIntent = new Intent(getApplication(), SettingsActivity.class);
+                                startActivity(settingsActivityIntent);
+                            case R.id.nav_share_app:
+                            case R.id.nav_home:
+                            case R.id.nav_history:
+
+                        }
+
                         return true;
                     }
                 }
@@ -109,6 +122,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             double savedBillAmount = mTipViewModel.getBillAmount();
             double savedTipPercent = mTipViewModel.getTipAmountPercent();
             calculateTip(savedBillAmount, savedTipPercent);
+        } else {
+            //Set billAmount and tipAmountPercent both to 0 to make sure all the calculation results
+            // remain 0.00 after screen rotation after reset button is hit.
+            calculateTip(0, 0);
         }
 
         mManager = (InputMethodManager)
@@ -173,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void calculateTip(double billAmount, double tipAmountPercent) {
-        double roundedTipAmount, roundedTipPersonAmount, roundedTotalAmount, roundedTotalPersonAmount;
 
         tipAmount = billAmount * tipAmountPercent / 100;
         tipPersonAmount = tipAmount / personCount;
@@ -191,15 +207,27 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             totalAmountTextView.setText(String.valueOf(roundedTotalAmount));
             totalPersonAmountTextView.setText(String.valueOf(roundedTotalPersonAmount));
         } else {
-            int integerTotalEach = (int) Math.round(roundedTotalPersonAmount);
-            double difference = integerTotalEach - roundedTotalPersonAmount;
+            totalEachAfterRounding = (int) Math.round(roundedTotalPersonAmount);
+            double difference = totalEachAfterRounding - roundedTotalPersonAmount;
             double roundedDiff = Math.round(difference * 100d) / 100d;
-            roundedTipPersonAmount = roundedTipPersonAmount + roundedDiff;
+            tipEachAfterRounding = roundedTipPersonAmount + roundedDiff;
 
             tipAmountTextView.setText(String.valueOf(roundedTipAmount));
-            tipPersonAmountTextView.setText(String.valueOf(roundedTipPersonAmount));
+            tipPersonAmountTextView.setText(String.valueOf(tipEachAfterRounding));
             totalAmountTextView.setText(String.valueOf(roundedTotalAmount));
-            totalPersonAmountTextView.setText(String.valueOf(integerTotalEach));
+            totalPersonAmountTextView.setText(String.valueOf(totalEachAfterRounding));
+        }
+    }
+
+    private String formatString(boolean roundTip, double tip, double roundedTip, double total, int roundedTotal) {
+        if (roundTip) {
+            return "Tip per person: " + roundedTip + "\n" +
+                    "Total per person: " + roundedTotal + "\n" +
+                    "Presented by Tip Calculator";
+        } else {
+            return "Tip per person: " + tip + "\n" +
+                    "Total per person: " + total + "\n" +
+                    "Presented by Tip Calculator";
         }
     }
 
@@ -216,6 +244,28 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (itemClicked == android.R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.START);
             return true;
+        }
+        if (itemClicked == R.id.action_reset) {
+            billAmountEditText.setText("0.00");
+            personCountTextView.setText("1");
+            tipAmountTextView.setText("0.00");
+            tipPersonAmountTextView.setText("0.00");
+            totalAmountTextView.setText("0.00");
+            totalPersonAmountTextView.setText("0.00");
+            //update viewModel
+            mTipViewModel.setPersonCount(1);
+            //Setting false as if the fab button was never hit so all the calculated textViews will
+            //remain 0.00 after rotation.
+            mTipViewModel.setFabClickedStatus(false);
+        }
+        if (itemClicked == R.id.action_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, formatString(roundTip, roundedTipPersonAmount, tipEachAfterRounding,
+                    roundedTotalPersonAmount, totalEachAfterRounding));
+
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -245,6 +295,4 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
-
-
 }

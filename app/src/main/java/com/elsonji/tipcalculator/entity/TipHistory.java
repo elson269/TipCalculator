@@ -8,9 +8,8 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "tip_history_table")
 public class TipHistory {
     @PrimaryKey(autoGenerate = true)
-    private int mId;
+    public int mId;
 
-    @NonNull
     @ColumnInfo(name = "date")
     private String mDate;
 
@@ -35,7 +34,11 @@ public class TipHistory {
         mTotalPerPerson = totalPerPerson;
     }
 
-    public String getTipDate() {
+    public int getId() {
+        return mId;
+    }
+
+    public String getDate() {
         return mDate;
     }
 

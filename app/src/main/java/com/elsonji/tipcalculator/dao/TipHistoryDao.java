@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface TipHistoryDao {
     @Query("SELECT * FROM tip_history_table")
-    LiveData<List<TipHistory>> getAllHistory();
+    LiveData<List<TipHistory>> getAllHistories();
 
     @Insert
     void insertHistory(TipHistory... tipHistory);
