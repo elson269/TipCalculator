@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.Date;
+
 @Entity(tableName = "tip_history_table")
 public class TipHistory {
     @PrimaryKey(autoGenerate = true)
@@ -17,7 +19,7 @@ public class TipHistory {
     private double mBillAmount;
 
     @ColumnInfo(name = "tip_percent")
-    private int mTipPercent;
+    private double mTipPercent;
 
     @ColumnInfo(name = "tip_per_person")
     private double mTipPerPerson;
@@ -25,7 +27,7 @@ public class TipHistory {
     @ColumnInfo(name = "total_per_person")
     private double mTotalPerPerson;
 
-    public TipHistory( String date, double billAmount, int tipPercent, double tipPerPerson,
+    public TipHistory( String date, double billAmount, double tipPercent, double tipPerPerson,
                       double totalPerPerson) {
         mDate = date;
         mBillAmount = billAmount;
@@ -46,7 +48,7 @@ public class TipHistory {
         return mBillAmount;
     }
 
-    public int getTipPercent() {
+    public double getTipPercent() {
         return mTipPercent;
     }
 

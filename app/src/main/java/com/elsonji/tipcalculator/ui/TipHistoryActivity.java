@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.elsonji.tipcalculator.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class TipHistoryActivity extends AppCompatActivity {
     @BindView(R.id.tip_history_recycler_view)
@@ -21,9 +22,10 @@ public class TipHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tip_history);
-
+        ButterKnife.bind(this);
         mAdapter = new TipHistoryAdapter(this);
-        mTipHistoryRecyclerView.setAdapter(mAdapter);
         mTipHistoryRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        mTipHistoryRecyclerView.setAdapter(mAdapter);
     }
 }

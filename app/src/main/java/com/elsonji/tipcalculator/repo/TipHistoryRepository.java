@@ -16,7 +16,7 @@ public class TipHistoryRepository {
 
     public TipHistoryRepository(Application application) {
         TipHistoryRoomDatabase db = TipHistoryRoomDatabase.getDatabase(application);
-        mTipHistoryDao = db.tipHistoryDao();
+        mTipHistoryDao = db.getTipHistoryDao();
         mAllTipHistories = mTipHistoryDao.getAllHistories();
     }
 
@@ -34,6 +34,7 @@ public class TipHistoryRepository {
         InsertAsyncTask(TipHistoryDao dao) {
             mAsyncTaskDao = dao;
         }
+
 
         @Override
         protected Void doInBackground(TipHistory... tipHistories) {

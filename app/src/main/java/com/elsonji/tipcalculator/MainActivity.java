@@ -1,5 +1,6 @@
 package com.elsonji.tipcalculator;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,8 +25,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.elsonji.tipcalculator.entity.TipHistory;
 import com.elsonji.tipcalculator.ui.SettingsActivity;
+import com.elsonji.tipcalculator.ui.TipHistoryActivity;
+import com.elsonji.tipcalculator.ui.TipHistoryAdapter;
+import com.elsonji.tipcalculator.viewmodel.TipHistoryViewModel;
 import com.elsonji.tipcalculator.viewmodel.TipViewModel;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,11 +81,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private boolean roundTip;
     private int totalEachAfterRounding;
     private double tipEachAfterRounding;
-    private double roundedTipAmount, roundedTipPersonAmount, roundedTotalAmount, roundedTotalPersonAmount;
-
+    private double TipAmount2D, TipPersonAmount2D, TotalAmount2D, TotalPersonAmount2D;
 
     private InputMethodManager mManager;
     private TipViewModel mTipViewModel;
+    private TipHistoryViewModel mTipHistoryViewModel;
+    private TipHistoryAdapter mTipHistoryAdapter;
     private boolean mFabClickedStatus = false;
 
 
@@ -90,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         //Register the listener.
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-        ;
 
         mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -106,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             case R.id.nav_share_app:
                             case R.id.nav_home:
                             case R.id.nav_history:
+                                Intent tipHistoryIntent = new Intent(getApplication(), TipHistoryActivity.class);
+                                startActivity(tipHistoryIntent);
 
                         }
 
@@ -113,6 +127,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     }
                 }
         );
+
+        mTipHistoryViewModel = ViewModelProviders.of(this).get(TipHistoryViewModel.class);
+        mTipHistoryAdapter = new TipHistoryAdapter(this);
+        mTipHistoryViewModel.getAllTipHistories().observe(this, new Observer<List<TipHistory>>() {
+            @Override
+            public void onChanged(@Nullable List<TipHistory> tipHistoryList) {
+                mTipHistoryAdapter.setTipHistories(tipHistoryList);
+            }
+        });
 
         mTipViewModel = ViewModelProviders.of(this).get(TipViewModel.class);
         displayPersonCount();
@@ -196,25 +219,25 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         totalAmount = billAmount + tipAmount;
         totalPersonAmount = totalAmount / personCount;
 
-        roundedTipAmount = Math.round(tipAmount * 100d) / 100d;
-        roundedTipPersonAmount = Math.round(tipPersonAmount * 100d) / 100d;
-        roundedTotalAmount = Math.round(totalAmount * 100d) / 100d;
-        roundedTotalPersonAmount = Math.round(totalPersonAmount * 100d) / 100d;
+        TipAmount2D = Math.round(tipAmount * 100d) / 100d;
+        TipPersonAmount2D = Math.round(tipPersonAmount * 100d) / 100d;
+        TotalAmount2D = Math.round(totalAmount * 100d) / 100d;
+        TotalPersonAmount2D = Math.round(totalPersonAmount * 100d) / 100d;
 
         if (!roundTip) {
-            tipAmountTextView.setText(String.valueOf(roundedTipAmount));
-            tipPersonAmountTextView.setText(String.valueOf(roundedTipPersonAmount));
-            totalAmountTextView.setText(String.valueOf(roundedTotalAmount));
-            totalPersonAmountTextView.setText(String.valueOf(roundedTotalPersonAmount));
+            tipAmountTextView.setText(String.valueOf(TipAmount2D));
+            tipPersonAmountTextView.setText(String.valueOf(TipPersonAmount2D));
+            totalAmountTextView.setText(String.valueOf(TotalAmount2D));
+            totalPersonAmountTextView.setText(String.valueOf(TotalPersonAmount2D));
         } else {
-            totalEachAfterRounding = (int) Math.round(roundedTotalPersonAmount);
-            double difference = totalEachAfterRounding - roundedTotalPersonAmount;
+            totalEachAfterRounding = (int) Math.round(TotalPersonAmount2D);
+            double difference = totalEachAfterRounding - TotalPersonAmount2D;
             double roundedDiff = Math.round(difference * 100d) / 100d;
-            tipEachAfterRounding = roundedTipPersonAmount + roundedDiff;
+            tipEachAfterRounding = TipPersonAmount2D + roundedDiff;
 
-            tipAmountTextView.setText(String.valueOf(roundedTipAmount));
+            tipAmountTextView.setText(String.valueOf(TipAmount2D));
             tipPersonAmountTextView.setText(String.valueOf(tipEachAfterRounding));
-            totalAmountTextView.setText(String.valueOf(roundedTotalAmount));
+            totalAmountTextView.setText(String.valueOf(TotalAmount2D));
             totalPersonAmountTextView.setText(String.valueOf(totalEachAfterRounding));
         }
     }
@@ -261,11 +284,25 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (itemClicked == R.id.action_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, formatString(roundTip, roundedTipPersonAmount, tipEachAfterRounding,
-                    roundedTotalPersonAmount, totalEachAfterRounding));
+            sendIntent.putExtra(Intent.EXTRA_TEXT, formatString(roundTip, TipPersonAmount2D, tipEachAfterRounding,
+                    TotalPersonAmount2D, totalEachAfterRounding));
 
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
+        }
+        if (itemClicked == R.id.action_save) {
+            DateFormat df = new SimpleDateFormat("MM/DD/YYYY");
+            Date currentTime = Calendar.getInstance().getTime();
+            String date = df.format(currentTime);
+            if (roundTip) {
+                TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
+                        tipEachAfterRounding, totalEachAfterRounding);
+                mTipHistoryViewModel.insert(tipHistory);
+            } else {
+                TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
+                        TipPersonAmount2D, TotalPersonAmount2D);
+                mTipHistoryViewModel.insert(tipHistory);
+            }
         }
         return super.onOptionsItemSelected(item);
     }

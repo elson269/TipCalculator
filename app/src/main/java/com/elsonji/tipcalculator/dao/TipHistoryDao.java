@@ -16,9 +16,12 @@ public interface TipHistoryDao {
     LiveData<List<TipHistory>> getAllHistories();
 
     @Insert
-    void insertHistory(TipHistory... tipHistory);
+    void insertHistory(TipHistory tipHistory);
 
     @Delete
-    void deleteHistories(TipHistory...tipHistories);
+    void deleteHistory(TipHistory tipHistory);
+
+    @Query("DELETE FROM tip_history_table")
+    void deleteAll();
 
 }

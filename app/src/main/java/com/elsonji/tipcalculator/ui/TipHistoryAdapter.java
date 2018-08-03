@@ -40,7 +40,7 @@ public class TipHistoryAdapter extends RecyclerView.Adapter<TipHistoryAdapter.Ti
     public void onBindViewHolder(@NonNull TipHistoryViewHolder holder, int position) {
         holder.mDateTextView.setText(mTipHistoryList.get(position).getDate());
         holder.mBillAmountTextView.setText(String.valueOf(mTipHistoryList.get(position).getBillAmount()));
-        holder.mTipPercentTextView.setText(mTipHistoryList.get(position).getTipPercent());
+        holder.mTipPercentTextView.setText(String.valueOf(mTipHistoryList.get(position).getTipPercent()));
         holder.mTipAmountTextView.setText(String.valueOf(mTipHistoryList.get(position).getTipPerPerson()));
         holder.mTipTotalTextView.setText(String.valueOf(mTipHistoryList.get(position).getTotalPerPerson()));
     }
@@ -52,6 +52,11 @@ public class TipHistoryAdapter extends RecyclerView.Adapter<TipHistoryAdapter.Ti
         } else {
             return 0;
         }
+    }
+
+    public void setTipHistories(List<TipHistory> tipHistoryList) {
+        mTipHistoryList = tipHistoryList;
+        notifyDataSetChanged();
     }
 
     public class TipHistoryViewHolder extends RecyclerView.ViewHolder {
