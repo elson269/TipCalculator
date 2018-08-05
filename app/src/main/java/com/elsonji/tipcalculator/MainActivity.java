@@ -1,20 +1,22 @@
 package com.elsonji.tipcalculator;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.persistence.db.SupportSQLiteOpenHelper;
+import android.arch.persistence.room.DatabaseConfiguration;
+import android.arch.persistence.room.InvalidationTracker;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +27,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.elsonji.tipcalculator.dao.TipHistoryDao;
+import com.elsonji.tipcalculator.database.TipHistoryRoomDatabase;
 import com.elsonji.tipcalculator.entity.TipHistory;
+import com.elsonji.tipcalculator.repo.TipHistoryRepository;
 import com.elsonji.tipcalculator.ui.SettingsActivity;
 import com.elsonji.tipcalculator.ui.TipHistoryActivity;
-import com.elsonji.tipcalculator.ui.TipHistoryAdapter;
+
 import com.elsonji.tipcalculator.viewmodel.TipHistoryViewModel;
 import com.elsonji.tipcalculator.viewmodel.TipViewModel;
 
@@ -36,7 +41,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,8 +90,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private InputMethodManager mManager;
     private TipViewModel mTipViewModel;
+    private TipHistoryRepository mTipHistoryRepo;
+    private TipHistoryDao mTipHistoryDao;
     private TipHistoryViewModel mTipHistoryViewModel;
-    private TipHistoryAdapter mTipHistoryAdapter;
     private boolean mFabClickedStatus = false;
 
 
@@ -128,14 +134,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 }
         );
 
-        mTipHistoryViewModel = ViewModelProviders.of(this).get(TipHistoryViewModel.class);
-        mTipHistoryAdapter = new TipHistoryAdapter(this);
-        mTipHistoryViewModel.getAllTipHistories().observe(this, new Observer<List<TipHistory>>() {
-            @Override
-            public void onChanged(@Nullable List<TipHistory> tipHistoryList) {
-                mTipHistoryAdapter.setTipHistories(tipHistoryList);
-            }
-        });
 
         mTipViewModel = ViewModelProviders.of(this).get(TipViewModel.class);
         displayPersonCount();
@@ -294,14 +292,25 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             DateFormat df = new SimpleDateFormat("MM/DD/YYYY");
             Date currentTime = Calendar.getInstance().getTime();
             String date = df.format(currentTime);
+            mTipHistoryViewModel = ViewModelProviders.of(this).get(TipHistoryViewModel.class);
+            //mTipHistoryRepo = new TipHistoryRepository(getApplication());
+            //TipHistoryRoomDatabase database = TipHistoryRoomDatabase.getDatabase(this);
+
+            //mTipHistoryDao = database.getTipHistoryDao();
             if (roundTip) {
                 TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
                         tipEachAfterRounding, totalEachAfterRounding);
                 mTipHistoryViewModel.insert(tipHistory);
+                //mTipHistoryRepo.insert(tipHistory);
+
+                //mTipHistoryDao.insertHistory(tipHistory);
             } else {
                 TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
                         TipPersonAmount2D, TotalPersonAmount2D);
                 mTipHistoryViewModel.insert(tipHistory);
+                //mTipHistoryRepo.insert(tipHistory);
+                //mTipHistoryDao.insertHistory(tipHistory);
+
             }
         }
         return super.onOptionsItemSelected(item);
@@ -328,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Unregister VisualizerActivity as an OnPreferenceChangedListener to avoid any memory leaks.
+        // Unregister Activity as an OnPreferenceChangedListener to avoid any memory leaks.
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
     }

@@ -48,8 +48,7 @@ public abstract class TipHistoryRoomDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... params) {
-            mTipHistoryDao.deleteAll();
-
+            mTipHistoryDao.getAllHistories();
             return null;
         }
     }

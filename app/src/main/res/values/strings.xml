@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Tip Calculator</string>
-    <string name="bill_amount">Bill Amount($): </string>
-    <string name="tip_amount_percent">Tip Amount(%):</string>
+    <string name="bill_amount_title">Bill Amount($): </string>
+    <string name="tip_amount_percent_title">Tip Amount(%):</string>
     <string name="tip_amount_total">Tip Total($):</string>
     <string name="tip_amount_each">Tip Per Person($):</string>
     <string name="bill_total">Total($):</string>
@@ -19,9 +19,18 @@
     <string name="confirm">Confirm</string>
     <string name="pref_default_tip_key">pref_default_tip_key</string>
     <string name="default_tip_title">Set default tip</string>
-    <string name="settings">Settings</string>
+    <string name="settings_title">Settings</string>
     <string name="pref_round_tip_key">pref_round_tip_key</string>
     <string name="round_tip_title">Round tip</string>
     <string name="round_tip_summary_on_msg">Round tip is on</string>
     <string name="round_tip_summary_off_msg">Round tip is off</string>
+    <string name="home_title">Home</string>
+    <string name="share_app_title">Share app</string>
+    <string name="action_save">Save</string>
+    <string name="action_reset">Reset</string>
+    <string name="tip_history_title">Tip history</string>
+    <string name="action_share_tip">Share tip</string>
+    <string name="date_title">Date:</string>
+    <string name="tip_percent_title">Tip(%):</string>
+    <string name="total_amount_title">Total Amount:</string>
 </resources>
