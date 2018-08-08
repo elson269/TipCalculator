@@ -1,9 +1,6 @@
 package com.elsonji.tipcalculator;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.room.DatabaseConfiguration;
-import android.arch.persistence.room.InvalidationTracker;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +13,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,10 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
-import com.elsonji.tipcalculator.dao.TipHistoryDao;
-import com.elsonji.tipcalculator.database.TipHistoryRoomDatabase;
 import com.elsonji.tipcalculator.entity.TipHistory;
-import com.elsonji.tipcalculator.repo.TipHistoryRepository;
 import com.elsonji.tipcalculator.ui.SettingsActivity;
 import com.elsonji.tipcalculator.ui.TipHistoryActivity;
 
@@ -90,8 +83,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private InputMethodManager mManager;
     private TipViewModel mTipViewModel;
-    private TipHistoryRepository mTipHistoryRepo;
-    private TipHistoryDao mTipHistoryDao;
     private TipHistoryViewModel mTipHistoryViewModel;
     private boolean mFabClickedStatus = false;
 
@@ -121,14 +112,16 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                             case R.id.nav_settings:
                                 Intent settingsActivityIntent = new Intent(getApplication(), SettingsActivity.class);
                                 startActivity(settingsActivityIntent);
+                                break;
                             case R.id.nav_share_app:
+                                break;
                             case R.id.nav_home:
+                                break;
                             case R.id.nav_history:
                                 Intent tipHistoryIntent = new Intent(getApplication(), TipHistoryActivity.class);
                                 startActivity(tipHistoryIntent);
-
+                                break;
                         }
-
                         return true;
                     }
                 }
@@ -289,28 +282,19 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             startActivity(sendIntent);
         }
         if (itemClicked == R.id.action_save) {
-            DateFormat df = new SimpleDateFormat("MM/DD/YYYY");
-            Date currentTime = Calendar.getInstance().getTime();
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            Date currentTime = new Date();
             String date = df.format(currentTime);
             mTipHistoryViewModel = ViewModelProviders.of(this).get(TipHistoryViewModel.class);
-            //mTipHistoryRepo = new TipHistoryRepository(getApplication());
-            //TipHistoryRoomDatabase database = TipHistoryRoomDatabase.getDatabase(this);
 
-            //mTipHistoryDao = database.getTipHistoryDao();
             if (roundTip) {
                 TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
                         tipEachAfterRounding, totalEachAfterRounding);
                 mTipHistoryViewModel.insert(tipHistory);
-                //mTipHistoryRepo.insert(tipHistory);
-
-                //mTipHistoryDao.insertHistory(tipHistory);
             } else {
                 TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
                         TipPersonAmount2D, TotalPersonAmount2D);
                 mTipHistoryViewModel.insert(tipHistory);
-                //mTipHistoryRepo.insert(tipHistory);
-                //mTipHistoryDao.insertHistory(tipHistory);
-
             }
         }
         return super.onOptionsItemSelected(item);

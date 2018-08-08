@@ -28,6 +28,14 @@ public class TipHistoryRepository {
         new InsertAsyncTask(mTipHistoryDao).execute(tipHistory);
     }
 
+    public void insertAll(List<TipHistory> tipHistoryList) {
+        new InsertAllAsyncTask(mTipHistoryDao).execute(tipHistoryList);
+    }
+
+    public void deleteAll() {
+        new DeleteAsyncTask(mTipHistoryDao).execute();
+    }
+
     private static class InsertAsyncTask extends AsyncTask<TipHistory, Void, Void> {
         private TipHistoryDao mAsyncTaskDao;
 
@@ -42,4 +50,33 @@ public class TipHistoryRepository {
             return null;
         }
     }
+
+    private static class DeleteAsyncTask extends AsyncTask<Void, Void, Void> {
+        private TipHistoryDao mAsyncTaskDao;
+
+        DeleteAsyncTask(TipHistoryDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAll();
+            return null;
+        }
+    }
+
+    private static class InsertAllAsyncTask extends AsyncTask<List<TipHistory>, Void, Void> {
+        private TipHistoryDao mAllAsyncTaskDao;
+
+        InsertAllAsyncTask(TipHistoryDao dao) {
+            mAllAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(List<TipHistory>... lists) {
+            mAllAsyncTaskDao.insertAllHistories(lists[0]);
+            return null;
+        }
+    }
 }
+

@@ -26,4 +26,12 @@ public class TipHistoryViewModel extends AndroidViewModel {
     public void insert(TipHistory tipHistory) {
         mRepository.insert(tipHistory);
     }
+
+    public void insertAll(List<TipHistory> tipHistoryList) {
+        mRepository.insertAll(tipHistoryList);
+    }
+
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
 }

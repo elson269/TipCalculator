@@ -23,33 +23,10 @@ public abstract class TipHistoryRoomDatabase extends RoomDatabase {
                 if (sInstance == null) {
                     sInstance = Room.databaseBuilder(context.getApplicationContext(),
                             TipHistoryRoomDatabase.class, "tip_history_database")
-                            .addCallback(sCallback)
                             .build();
                 }
             }
         }
         return sInstance;
-    }
-
-    private static RoomDatabase.Callback sCallback =
-            new RoomDatabase.Callback() {
-                @Override
-                public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                    super.onOpen(db);
-                    new PopulateDbAsync(sInstance).execute();
-                }
-            };
-
-    private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
-        private TipHistoryDao mTipHistoryDao;
-
-        PopulateDbAsync(TipHistoryRoomDatabase db) {
-            mTipHistoryDao = db.getTipHistoryDao();
-        }
-        @Override
-        protected Void doInBackground(Void... params) {
-            mTipHistoryDao.getAllHistories();
-            return null;
-        }
     }
 }

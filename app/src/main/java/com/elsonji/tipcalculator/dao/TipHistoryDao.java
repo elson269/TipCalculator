@@ -18,6 +18,9 @@ public interface TipHistoryDao {
     @Insert
     void insertHistory(TipHistory tipHistory);
 
+    @Insert
+    void insertAllHistories(List<TipHistory> tipHistoryList);
+
     @Delete
     void deleteHistory(TipHistory tipHistory);
 

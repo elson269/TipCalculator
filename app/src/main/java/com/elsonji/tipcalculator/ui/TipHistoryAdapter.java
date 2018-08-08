@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.elsonji.tipcalculator.R;
@@ -30,7 +31,7 @@ public class TipHistoryAdapter extends RecyclerView.Adapter<TipHistoryAdapter.Ti
     @NonNull
     @Override
     public TipHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        FrameLayout itemView = (FrameLayout) LayoutInflater.from(mContext)
+        LinearLayout itemView = (LinearLayout) LayoutInflater.from(mContext)
                 .inflate(R.layout.tip_history_item, parent, false);
         TipHistoryViewHolder tipHistoryViewHolder = new TipHistoryViewHolder(itemView);
         return tipHistoryViewHolder;
