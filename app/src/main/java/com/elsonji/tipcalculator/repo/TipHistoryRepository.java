@@ -33,7 +33,11 @@ public class TipHistoryRepository {
     }
 
     public void deleteAll() {
-        new DeleteAsyncTask(mTipHistoryDao).execute();
+        new DeleteAllAsyncTask(mTipHistoryDao).execute();
+    }
+
+    public void delete(TipHistory tipHistory) {
+        new DeleteAsyncTask(mTipHistoryDao).execute(tipHistory);
     }
 
     private static class InsertAsyncTask extends AsyncTask<TipHistory, Void, Void> {
@@ -51,10 +55,23 @@ public class TipHistoryRepository {
         }
     }
 
-    private static class DeleteAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class DeleteAsyncTask extends AsyncTask<TipHistory, Void, Void> {
         private TipHistoryDao mAsyncTaskDao;
 
         DeleteAsyncTask(TipHistoryDao dao) {
+            mAsyncTaskDao = dao;
+        }
+        @Override
+        protected Void doInBackground(TipHistory... tipHistories) {
+            mAsyncTaskDao.deleteHistory(tipHistories[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+        private TipHistoryDao mAsyncTaskDao;
+
+        DeleteAllAsyncTask(TipHistoryDao dao) {
             mAsyncTaskDao = dao;
         }
 

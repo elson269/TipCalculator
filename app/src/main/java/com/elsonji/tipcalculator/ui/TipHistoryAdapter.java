@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,10 +23,11 @@ public class TipHistoryAdapter extends RecyclerView.Adapter<TipHistoryAdapter.Ti
 
     private List<TipHistory> mTipHistoryList;
     private Context mContext;
+    private OnHistoryItemClickListener mListener;
 
-    public TipHistoryAdapter(Context context) {
+    public TipHistoryAdapter(Context context, OnHistoryItemClickListener listener) {
         mContext = context;
-
+        mListener = listener;
     }
 
     @NonNull
@@ -38,12 +40,19 @@ public class TipHistoryAdapter extends RecyclerView.Adapter<TipHistoryAdapter.Ti
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TipHistoryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final TipHistoryViewHolder holder, int position) {
         holder.mDateTextView.setText(mTipHistoryList.get(position).getDate());
         holder.mBillAmountTextView.setText(String.valueOf(mTipHistoryList.get(position).getBillAmount()));
         holder.mTipPercentTextView.setText(String.valueOf(mTipHistoryList.get(position).getTipPercent()));
         holder.mTipAmountTextView.setText(String.valueOf(mTipHistoryList.get(position).getTipPerPerson()));
         holder.mTipTotalTextView.setText(String.valueOf(mTipHistoryList.get(position).getTotalPerPerson()));
+        holder.mDeleteImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int positionClicked = holder.getAdapterPosition();
+                mListener.onItemClick(view, positionClicked);
+            }
+        });
     }
 
     @Override
@@ -71,10 +80,16 @@ public class TipHistoryAdapter extends RecyclerView.Adapter<TipHistoryAdapter.Ti
         TextView mTipAmountTextView;
         @BindView(R.id.item_total_text_view)
         TextView mTipTotalTextView;
+        @BindView(R.id.delete_button)
+        ImageButton mDeleteImageButton;
 
         public TipHistoryViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnHistoryItemClickListener {
+        void onItemClick(View view, int position);
     }
 }

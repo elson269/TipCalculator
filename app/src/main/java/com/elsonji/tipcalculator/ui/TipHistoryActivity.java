@@ -22,7 +22,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TipHistoryActivity extends AppCompatActivity {
+public class TipHistoryActivity extends AppCompatActivity implements
+        TipHistoryAdapter.OnHistoryItemClickListener {
     @BindView(R.id.tip_history_recycler_view)
     RecyclerView mTipHistoryRecyclerView;
 
@@ -37,7 +38,7 @@ public class TipHistoryActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mTipHistoryViewModel = ViewModelProviders.of(this).get(TipHistoryViewModel.class);
-        mTipHistoryAdapter = new TipHistoryAdapter(this);
+        mTipHistoryAdapter = new TipHistoryAdapter(this, this);
         mTipHistoryRecyclerView.setAdapter(mTipHistoryAdapter);
         mTipHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mOwner = this;
@@ -48,8 +49,6 @@ public class TipHistoryActivity extends AppCompatActivity {
                         mTipHistoryAdapter.setTipHistories(tipHistoryList);
                     }
                 });
-
-
     }
 
     @Override
@@ -80,4 +79,17 @@ public class TipHistoryActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(View view, int position) {
+        mTipHistoryViewModel.delete(position);
+        final TipHistory deletedTipHistory = mTipHistoryViewModel.getAllTipHistories().getValue().get(position);
+        Snackbar.make(findViewById(R.id.tip_history_coordinator_layout),
+                "History deleted", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mTipHistoryViewModel.insert(deletedTipHistory);
+                    }
+                }).show();
+    }
 }

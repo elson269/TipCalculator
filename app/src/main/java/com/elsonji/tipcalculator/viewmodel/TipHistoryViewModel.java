@@ -34,4 +34,8 @@ public class TipHistoryViewModel extends AndroidViewModel {
     public void deleteAll() {
         mRepository.deleteAll();
     }
+
+    public void delete(int position) {
+        mRepository.delete(mAllTipHistories.getValue().get(position));
+    }
 }
