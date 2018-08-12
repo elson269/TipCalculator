@@ -42,7 +42,7 @@ public class TipHistoryAdapter extends RecyclerView.Adapter<TipHistoryAdapter.Ti
     @Override
     public void onBindViewHolder(@NonNull final TipHistoryViewHolder holder, int position) {
         holder.mDateTextView.setText(mTipHistoryList.get(position).getDate());
-        holder.mBillAmountTextView.setText(String.valueOf(mTipHistoryList.get(position).getBillAmount()));
+        //holder.mBillAmountTextView.setText(String.valueOf(mTipHistoryList.get(position).getBillAmount()));
         holder.mTipPercentTextView.setText(String.valueOf(mTipHistoryList.get(position).getTipPercent()));
         holder.mTipAmountTextView.setText(String.valueOf(mTipHistoryList.get(position).getTipPerPerson()));
         holder.mTipTotalTextView.setText(String.valueOf(mTipHistoryList.get(position).getTotalPerPerson()));
@@ -72,8 +72,8 @@ public class TipHistoryAdapter extends RecyclerView.Adapter<TipHistoryAdapter.Ti
     public class TipHistoryViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_date_text_view)
         TextView mDateTextView;
-        @BindView(R.id.item_bill_text_view)
-        TextView mBillAmountTextView;
+        //@BindView(R.id.item_bill_text_view)
+        //TextView mBillAmountTextView;
         @BindView(R.id.item_tip_percent_text_view)
         TextView mTipPercentTextView;
         @BindView(R.id.item_tip_amount_text_view)
@@ -83,7 +83,7 @@ public class TipHistoryAdapter extends RecyclerView.Adapter<TipHistoryAdapter.Ti
         @BindView(R.id.delete_button)
         ImageButton mDeleteImageButton;
 
-        public TipHistoryViewHolder(View itemView) {
+        TipHistoryViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

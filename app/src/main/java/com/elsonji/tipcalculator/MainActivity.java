@@ -2,6 +2,7 @@ package com.elsonji.tipcalculator;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,9 +10,11 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +37,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 import butterknife.BindView;
@@ -181,19 +185,21 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 if (billAmountString.matches("[0-9.]+")) {
                     billAmount = Double.parseDouble(billAmountString);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please enter a number", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter an amount", Toast.LENGTH_LONG).show();
                 }
 
                 if (tipAmountString.matches("[0-9.]+")) {
                     tipAmountPercent = Double.parseDouble(tipAmountString);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please enter a number", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please enter an amount", Toast.LENGTH_LONG).show();
                 }
 
                 mTipViewModel.setBillAmount(billAmount);
                 mTipViewModel.setTipAmountPercent(tipAmountPercent);
 
-                calculateTip(billAmount, tipAmountPercent);
+                if (!billAmountString.isEmpty() && !tipAmountString.isEmpty()) {
+                    calculateTip(billAmount, tipAmountPercent);
+                }
             }
         });
     }
@@ -282,20 +288,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             startActivity(sendIntent);
         }
         if (itemClicked == R.id.action_save) {
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            Date currentTime = new Date();
-            String date = df.format(currentTime);
             mTipHistoryViewModel = ViewModelProviders.of(this).get(TipHistoryViewModel.class);
-
-            if (roundTip) {
-                TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
-                        tipEachAfterRounding, totalEachAfterRounding);
-                mTipHistoryViewModel.insert(tipHistory);
-            } else {
-                TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
-                        TipPersonAmount2D, TotalPersonAmount2D);
-                mTipHistoryViewModel.insert(tipHistory);
-            }
+            showSaveConfirmationDialog();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -324,5 +318,41 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         // Unregister Activity as an OnPreferenceChangedListener to avoid any memory leaks.
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    private void showSaveConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Would you like to save this record to the history?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                Date currentTime = new Date();
+                String date = df.format(currentTime);
+                if (roundTip) {
+                    TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
+                            tipEachAfterRounding, totalEachAfterRounding);
+                    mTipHistoryViewModel.insert(tipHistory);
+                } else {
+                    TipHistory tipHistory = new TipHistory(date, billAmount, tipAmountPercent,
+                            TipPersonAmount2D, TotalPersonAmount2D);
+                    mTipHistoryViewModel.insert(tipHistory);
+                }
+                Snackbar.make(findViewById(R.id.main_activity_coordinator_layout),
+                        "Record saved", Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id) {
+                if (dialogInterface != null) {
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
