@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.pref_default_tip_key))) {
-            String defaultTip = sharedPreferences.getString(getString(R.string.pref_default_tip_key), "");
+            String defaultTip = String.valueOf(sharedPreferences.getInt(getString(R.string.pref_default_tip_key), -1));
             tipAmountEditText.setText(defaultTip);
         }
     }
@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onResume() {
         super.onResume();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String defaultTip = sharedPref.getString(getString(R.string.pref_default_tip_key), "");
+        String defaultTip = String.valueOf(sharedPref.getInt(getString(R.string.pref_default_tip_key), -1));
         tipAmountEditText.setText(defaultTip);
 
         roundTip = sharedPref.getBoolean(getString(R.string.pref_round_tip_key), false);
